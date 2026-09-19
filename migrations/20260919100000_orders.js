@@ -1,0 +1,3 @@
+'use strict';
+exports.up=async function(knex){await knex.schema.createTable('orders',t=>{t.increments();t.string('customer_name').notNullable();t.string('phone').notNullable();t.text('address').notNullable();t.decimal('total',10,2).notNullable().defaultTo(0);t.string('status').notNullable().defaultTo('pending');t.timestamps(true,true)});await knex.schema.createTable('order_items',t=>{t.increments();t.integer('order_id').notNullable().references('id').inTable('orders').onDelete('CASCADE');t.integer('fish_id').notNullable();t.string('fish_name').notNullable();t.decimal('price',10,2).notNullable();t.integer('quantity').notNullable()})};
+exports.down=async function(knex){await knex.schema.dropTableIfExists('order_items');await knex.schema.dropTableIfExists('orders')};
